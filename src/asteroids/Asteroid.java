@@ -7,13 +7,24 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 /**
- * @author Tillmann Rendel
+ * An asteroid.
  * 
+ * @author Tillmann Rendel
  */
 public class Asteroid extends Element {
+	/**
+	 * The color of this asteroid.
+	 */
 	private final Color color;
+
+	/**
+	 * The radius of this asteroid, in units.
+	 */
 	private final double radius;
 
+	/**
+	 * Creates an asteroid.
+	 */
 	public Asteroid(final double locationX, final double locationY, final double velocityX, final double velocityY,
 			final double acceleration, final double direction, final double rotation, final Color color,
 			final double radius) {
@@ -24,6 +35,10 @@ public class Asteroid extends Element {
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * <p>
+	 * This implementation renders the asteroid as a filled circle.
+	 * </p>
 	 */
 	@Override
 	public void render(final Graphics g) {

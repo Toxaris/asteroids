@@ -6,6 +6,8 @@ package asteroids;
 import java.awt.Graphics;
 
 /**
+ * A moving, accelerating, rotating something on the screen.
+ * 
  * @author Tillmann Rendel
  */
 public abstract class Element {
@@ -44,6 +46,9 @@ public abstract class Element {
 	 */
 	protected double velocityY;
 
+	/**
+	 * Create moving, accelerating, rotating something on the screen.
+	 */
 	public Element(final double locationX, final double locationY, final double velocityX, final double velocityY,
 			final double acceleration, final double direction, final double rotation) {
 		this.locationX = locationX;
@@ -55,8 +60,17 @@ public abstract class Element {
 		this.rotation = rotation;
 	}
 
+	/**
+	 * Render this element on the screen.
+	 * 
+	 * @param g
+	 *            the graphics context
+	 */
 	public abstract void render(final Graphics g);
 
+	/**
+	 * Advance the simulation of this element's state one step.
+	 */
 	public void tick() {
 		locationX += velocityX;
 		locationY += velocityY;

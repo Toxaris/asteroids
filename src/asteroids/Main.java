@@ -21,6 +21,8 @@ import java.util.List;
 import javax.swing.Timer;
 
 /**
+ * The main window.
+ * 
  * @author Tillmann Rendel
  */
 public class Main extends Frame {
