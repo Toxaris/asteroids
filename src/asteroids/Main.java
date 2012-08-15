@@ -15,6 +15,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,7 @@ public class Main extends Frame {
 	List<Element> elements = new ArrayList<Element>();
 
 	public Main() {
-		elements.add(new Asteroid(100.0, 100.0, 0.0, 0.0, 0.01, 0.0, 0.0, Color.blue, 50.0));
+		elements.add(new Asteroid(60.0, -40.0, 0.0, 0.0, 0.01, 0.0, 0.0, Color.blue, 10.0));
 
 		setSize(400, 300);
 
@@ -70,6 +71,14 @@ public class Main extends Frame {
 	}
 
 	private void render(final Graphics2D g) {
+		final int width = getWidth();
+		final int height = getHeight();
+		final int size = Math.min(width, height);
+		final double factor = size / 200.0;
+
+		g.translate(0.5 * width, 0.5 * height);
+		g.scale(factor, factor);
+		g.setClip(new Ellipse2D.Double(-100, -100, 200, 200));
 		for (final Element element : elements) {
 			element.draw(g);
 		}
