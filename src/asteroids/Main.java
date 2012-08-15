@@ -54,7 +54,7 @@ public class Main extends Frame {
 	List<Element> elements = new ArrayList<Element>();
 
 	public Main() {
-		elements.add(new Asteroid(60.0, -40.0, 0.0, 0.0, 0.01, 0.0, 0.0, Color.blue, 10.0));
+		elements.add(new Ship(0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0));
 
 		setSize(400, 300);
 
