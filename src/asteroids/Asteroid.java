@@ -4,7 +4,7 @@
 package asteroids;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  * An asteroid.
@@ -41,7 +41,7 @@ public class Asteroid extends Element {
 	 * </p>
 	 */
 	@Override
-	public void render(final Graphics g) {
+	public void render(final Graphics2D g) {
 		g.setColor(color);
 		g.fillOval((int) -radius, (int) -radius, (int) radius, (int) radius);
 	}

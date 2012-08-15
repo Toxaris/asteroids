@@ -6,6 +6,7 @@ package asteroids;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
@@ -61,13 +62,14 @@ public class Main extends Frame {
 
 	@Override
 	public void paint(final Graphics g) {
+		final Graphics2D g2d = (Graphics2D) g;
 		if (!fullScreen) {
-			render(g);
+			render(g2d);
 			super.paint(g);
 		}
 	}
 
-	private void render(final Graphics g) {
+	private void render(final Graphics2D g) {
 		for (final Element element : elements) {
 			element.draw(g);
 		}
@@ -95,7 +97,7 @@ public class Main extends Frame {
 
 		while (!done) {
 			tick();
-			final Graphics g = bufferStrategy.getDrawGraphics();
+			final Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 			try {
 				g.setColor(Color.black);
 				g.fillRect(0, 0, getWidth(), getHeight());

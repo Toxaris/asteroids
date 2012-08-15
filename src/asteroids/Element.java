@@ -4,6 +4,7 @@
 package asteroids;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  * A moving, accelerating, rotating something on the screen.
@@ -68,7 +69,7 @@ public abstract class Element {
 	 * @param g
 	 *            the graphics context.
 	 */
-	public void draw(final Graphics g) {
+	public void draw(final Graphics2D g) {
 		final int deltaX = (int) locationX;
 		final int deltaY = (int) locationY;
 		g.translate(deltaX, deltaY);
@@ -84,7 +85,7 @@ public abstract class Element {
 	 * @param g
 	 *            the graphics context
 	 */
-	public abstract void render(final Graphics g);
+	public abstract void render(final Graphics2D g);
 
 	/**
 	 * Advance the simulation of this element's state one step.
