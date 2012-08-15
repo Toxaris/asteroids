@@ -70,9 +70,7 @@ public abstract class Element {
 	 *            the graphics context.
 	 */
 	public void draw(final Graphics2D g) {
-		final int deltaX = (int) locationX;
-		final int deltaY = (int) locationY;
-		g.translate(deltaX, deltaY);
+		g.translate(locationX, locationY);
 		render(g);
 		g.translate(-deltaX, -deltaY);
 	}
