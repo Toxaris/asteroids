@@ -77,7 +77,7 @@ public class Main extends Frame {
 		final double factor = size / 200.0;
 
 		g.translate(0.5 * width, 0.5 * height);
-		g.scale(factor, factor);
+		g.scale(factor, -factor);
 		g.setClip(new Ellipse2D.Double(-100, -100, 200, 200));
 		for (final Element element : elements) {
 			element.draw(g);

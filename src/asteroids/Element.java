@@ -63,22 +63,25 @@ public abstract class Element {
 
 	/**
 	 * Draws this element on the screen. This method calls
-	 * {@link #render(Graphics)} after translating the origin of the graphics
-	 * context. Subclasses should override render.
+	 * {@link #render(Graphics)} after transforming the coordinate system of the
+	 * graphics context. Subclasses should override render.
 	 * 
 	 * @param g
 	 *            the graphics context.
 	 */
 	public void draw(final Graphics2D g) {
 		g.translate(locationX, locationY);
+		g.rotate(direction);
 		render(g);
-		g.translate(-deltaX, -deltaY);
+		g.rotate(-direction);
+		g.translate(-locationX, -locationY);
 	}
 
 	/**
-	 * Renders this element on the screen. The origin of the graphics context
-	 * has already been translated when this method is called, so
-	 * implementations of this method always draw around the origin.
+	 * Renders this element on the screen. The coordinate system of the graphics
+	 * context has already been translated and rotated when this method is
+	 * called, so implementations always draw around the origin, facing straight
+	 * up.
 	 * 
 	 * @param g
 	 *            the graphics context
@@ -91,7 +94,7 @@ public abstract class Element {
 	public void tick() {
 		locationX += velocityX;
 		locationY += velocityY;
-		velocityX += acceleration * Math.sin(direction);
+		velocityX -= acceleration * Math.sin(direction);
 		velocityY += acceleration * Math.cos(direction);
 		direction += rotation;
 	}
