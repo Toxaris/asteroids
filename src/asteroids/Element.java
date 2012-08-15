@@ -73,8 +73,6 @@ public abstract class Element {
 		g.translate(locationX, locationY);
 		g.rotate(direction);
 		render(g);
-		g.rotate(-direction);
-		g.translate(-locationX, -locationY);
 	}
 
 	/**

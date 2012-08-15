@@ -15,6 +15,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
@@ -79,8 +80,10 @@ public class Main extends Frame {
 		g.translate(0.5 * width, 0.5 * height);
 		g.scale(factor, -factor);
 		g.setClip(new Ellipse2D.Double(-100, -100, 200, 200));
+		final AffineTransform transform = g.getTransform();
 		for (final Element element : elements) {
 			element.draw(g);
+			g.setTransform(transform);
 		}
 	}
 
