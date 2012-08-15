@@ -69,7 +69,7 @@ public class Main extends Frame {
 
 	private void render(final Graphics g) {
 		for (final Element element : elements) {
-			element.render(g);
+			element.draw(g);
 		}
 	}
 

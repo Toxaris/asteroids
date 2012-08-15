@@ -43,6 +43,6 @@ public class Asteroid extends Element {
 	@Override
 	public void render(final Graphics g) {
 		g.setColor(color);
-		g.fillOval((int) (locationX - radius), (int) (locationY - radius), (int) radius, (int) radius);
+		g.fillOval((int) -radius, (int) -radius, (int) radius, (int) radius);
 	}
 }

@@ -61,7 +61,25 @@ public abstract class Element {
 	}
 
 	/**
-	 * Render this element on the screen.
+	 * Draws this element on the screen. This method calls
+	 * {@link #render(Graphics)} after translating the origin of the graphics
+	 * context. Subclasses should override render.
+	 * 
+	 * @param g
+	 *            the graphics context.
+	 */
+	public void draw(final Graphics g) {
+		final int deltaX = (int) locationX;
+		final int deltaY = (int) locationY;
+		g.translate(deltaX, deltaY);
+		render(g);
+		g.translate(-deltaX, -deltaY);
+	}
+
+	/**
+	 * Renders this element on the screen. The origin of the graphics context
+	 * has already been translated when this method is called, so
+	 * implementations of this method always draw around the origin.
 	 * 
 	 * @param g
 	 *            the graphics context
