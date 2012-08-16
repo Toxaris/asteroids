@@ -109,8 +109,9 @@ public class Main extends Frame {
 		createBufferStrategy(2);
 		final BufferStrategy bufferStrategy = getBufferStrategy();
 
+		state.start();
 		while (!done) {
-			state.tick();
+			state.simulate();
 			final Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 			try {
 				g.setColor(Color.black);
@@ -130,12 +131,10 @@ public class Main extends Frame {
 		final Timer timer = new Timer(30, new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				state.tick();
+				state.simulate();
 				repaint();
 			}
 		});
-
-		timer.start();
 
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -145,5 +144,7 @@ public class Main extends Frame {
 		});
 
 		setVisible(true);
+		timer.start();
+		state.start();
 	}
 }
