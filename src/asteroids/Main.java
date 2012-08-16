@@ -19,8 +19,6 @@ import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.Timer;
 
@@ -52,11 +50,12 @@ public class Main extends Frame {
 	}
 
 	private boolean done;
+
 	private boolean fullScreen;
-	List<Element> elements = new ArrayList<Element>();
+	State state = new State();
 
 	public Main() {
-		elements.add(new Ship(0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0));
+		state.addElement(new Ship(0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0));
 
 		setSize(400, 300);
 
@@ -84,7 +83,7 @@ public class Main extends Frame {
 		g.scale(factor, -factor);
 		g.setClip(new Ellipse2D.Double(-100, -100, 200, 200));
 		final AffineTransform transform = g.getTransform();
-		for (final Element element : elements) {
+		for (final Element element : state.getElements()) {
 			element.draw(g);
 			g.setTransform(transform);
 		}
@@ -111,7 +110,7 @@ public class Main extends Frame {
 		final BufferStrategy bufferStrategy = getBufferStrategy();
 
 		while (!done) {
-			tick();
+			state.tick();
 			final Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 			try {
 				g.setColor(Color.black);
@@ -131,7 +130,8 @@ public class Main extends Frame {
 		final Timer timer = new Timer(30, new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				tick();
+				state.tick();
+				repaint();
 			}
 		});
 
@@ -145,15 +145,5 @@ public class Main extends Frame {
 		});
 
 		setVisible(true);
-	}
-
-	/**
-	 * 
-	 */
-	protected void tick() {
-		for (final Element element : elements) {
-			element.tick();
-		}
-		repaint();
 	}
 }
