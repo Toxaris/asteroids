@@ -52,9 +52,13 @@ public class Main extends Frame {
 	private boolean done;
 
 	private boolean fullScreen;
-	State state = new State();
+	private final Physics physics;
+	private final State state;
 
 	public Main() {
+		state = new State();
+		physics = new Physics(state);
+
 		state.addElement(new Ship(0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0));
 
 		setSize(400, 300);
@@ -109,9 +113,9 @@ public class Main extends Frame {
 		createBufferStrategy(2);
 		final BufferStrategy bufferStrategy = getBufferStrategy();
 
-		state.start();
+		physics.start();
 		while (!done) {
-			state.simulate();
+			physics.simulate();
 			final Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 			try {
 				g.setColor(Color.black);
@@ -131,7 +135,7 @@ public class Main extends Frame {
 		final Timer timer = new Timer(30, new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				state.simulate();
+				physics.simulate();
 				repaint();
 			}
 		});
@@ -145,6 +149,6 @@ public class Main extends Frame {
 
 		setVisible(true);
 		timer.start();
-		state.start();
+		physics.start();
 	}
 }
