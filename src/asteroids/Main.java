@@ -12,10 +12,6 @@ import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferStrategy;
@@ -43,27 +39,32 @@ public class Main extends Frame {
 			} finally {
 				device.setFullScreenWindow(null);
 				main.dispose();
+				System.exit(0);
 			}
 		} else {
 			main.runWindowed();
 		}
 	}
 
-	private boolean done;
+	private final Control control;
 
 	private boolean fullScreen;
 	private final Physics physics;
+
 	private final State state;
 
 	public Main() {
 		state = new State();
 		physics = new Physics(state);
+		control = new Control();
 
 		state.addElement(new Ship(0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0));
 
 		setSize(400, 300);
-
 		setBackground(Color.black);
+
+		addKeyListener(control);
+		addWindowListener(control);
 	}
 
 	@Override
@@ -98,23 +99,12 @@ public class Main extends Frame {
 	 */
 	private void runFullScreen() {
 		fullScreen = true;
-		addKeyListener(new KeyAdapter() {
-			/**
-			 * {@inheritDoc}
-			 */
-			@Override
-			public void keyReleased(final KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					done = true;
-				}
-			}
-		});
 
 		createBufferStrategy(2);
 		final BufferStrategy bufferStrategy = getBufferStrategy();
 
 		physics.start();
-		while (!done) {
+		while (control.isRunning()) {
 			physics.simulate();
 			final Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 			try {
@@ -135,15 +125,13 @@ public class Main extends Frame {
 		final Timer timer = new Timer(30, new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				physics.simulate();
-				repaint();
-			}
-		});
-
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(final WindowEvent e) {
-				dispose();
+				if (control.isRunning()) {
+					physics.simulate();
+					repaint();
+				} else {
+					dispose();
+					System.exit(0);
+				}
 			}
 		});
 
