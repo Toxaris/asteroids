@@ -20,6 +20,11 @@ public class Control implements KeyListener, WindowListener {
 	private boolean accelerating = false;
 
 	/**
+	 * Whether the user wants the spaceship to decelerate.
+	 */
+	private boolean decelerating = false;
+
+	/**
 	 * Whether the game is currently running. When this becomes
 	 * <code>false</code>, the game will automatically shutdown.
 	 */
@@ -45,7 +50,11 @@ public class Control implements KeyListener, WindowListener {
 	 * Changes the state to reflect the actions requested by the user.
 	 */
 	public void control() {
-		state.getShip().acceleration = accelerating ? Rules.SHIP_ACCELERATION : 0.0;
+		final Ship ship = state.getShip();
+
+		ship.acceleration = 0;
+		ship.acceleration += accelerating ? Rules.SHIP_ACCELERATION : 0.0;
+		ship.acceleration -= decelerating ? Rules.SHIP_DECELERATION : 0.0;
 	}
 
 	/**
@@ -67,6 +76,9 @@ public class Control implements KeyListener, WindowListener {
 		case KeyEvent.VK_UP:
 			accelerating = true;
 			break;
+		case KeyEvent.VK_DOWN:
+			decelerating = true;
+			break;
 		}
 	}
 
@@ -81,6 +93,9 @@ public class Control implements KeyListener, WindowListener {
 			break;
 		case KeyEvent.VK_UP:
 			accelerating = false;
+			break;
+		case KeyEvent.VK_DOWN:
+			decelerating = false;
 			break;
 		}
 	}
