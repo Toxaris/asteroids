@@ -56,9 +56,9 @@ public class Main extends Frame {
 	public Main() {
 		state = new State();
 		physics = new Physics(state);
-		control = new Control();
+		control = new Control(state);
 
-		state.addElement(new Ship(0.0, 0.0, 0.0, 0.0, 0.01, 0.0, 0.0));
+		state.addElement(new Ship(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
 
 		setSize(400, 300);
 		setBackground(Color.black);
@@ -105,6 +105,7 @@ public class Main extends Frame {
 
 		physics.start();
 		while (control.isRunning()) {
+			control.control();
 			physics.simulate();
 			final Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 			try {
@@ -126,6 +127,7 @@ public class Main extends Frame {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 				if (control.isRunning()) {
+					control.control();
 					physics.simulate();
 					repaint();
 				} else {

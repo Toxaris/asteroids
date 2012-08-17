@@ -14,13 +14,38 @@ import java.awt.event.WindowListener;
  * @author Tillmann Rendel
  */
 public class Control implements KeyListener, WindowListener {
+	/**
+	 * Whether the user wants the spaceship to accelerate.
+	 */
+	private boolean accelerating = false;
+
+	/**
+	 * Whether the game is currently running. When this becomes
+	 * <code>false</code>, the game will automatically shutdown.
+	 */
 	private boolean running;
 
 	/**
-	 * Creates control.
+	 * The state this controls affect.
 	 */
-	public Control() {
+	private final State state;
+
+	/**
+	 * Creates control.
+	 * 
+	 * @param state
+	 *            the state the new controls affect
+	 */
+	public Control(final State state) {
+		this.state = state;
 		running = true;
+	}
+
+	/**
+	 * Changes the state to reflect the actions requested by the user.
+	 */
+	public void control() {
+		state.getShip().acceleration = accelerating ? Rules.SHIP_ACCELERATION : 0.0;
 	}
 
 	/**
@@ -38,6 +63,11 @@ public class Control implements KeyListener, WindowListener {
 	 */
 	@Override
 	public void keyPressed(final KeyEvent e) {
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_UP:
+			accelerating = true;
+			break;
+		}
 	}
 
 	/**
@@ -48,6 +78,9 @@ public class Control implements KeyListener, WindowListener {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_ESCAPE:
 			running = false;
+			break;
+		case KeyEvent.VK_UP:
+			accelerating = false;
 			break;
 		}
 	}
