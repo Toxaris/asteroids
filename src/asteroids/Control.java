@@ -36,6 +36,17 @@ public class Control implements KeyListener, WindowListener {
 	private final State state;
 
 	/**
+	 * Whether the user wants the spaceship to turn left, that is,
+	 * counterclockwise.
+	 */
+	private boolean turningLeft = false;
+
+	/**
+	 * Whether the user wants the spaceship to turn right, that is, clockwise.
+	 */
+	private boolean turningRight = false;
+
+	/**
 	 * Creates control.
 	 * 
 	 * @param state
@@ -55,6 +66,10 @@ public class Control implements KeyListener, WindowListener {
 		ship.acceleration = 0;
 		ship.acceleration += accelerating ? Rules.SHIP_ACCELERATION : 0.0;
 		ship.acceleration -= decelerating ? Rules.SHIP_DECELERATION : 0.0;
+
+		ship.rotation = 0;
+		ship.rotation += turningLeft ? Rules.SHIP_ROTATION : 0.0;
+		ship.rotation -= turningRight ? Rules.SHIP_ROTATION : 0.0;
 	}
 
 	/**
@@ -79,6 +94,12 @@ public class Control implements KeyListener, WindowListener {
 		case KeyEvent.VK_DOWN:
 			decelerating = true;
 			break;
+		case KeyEvent.VK_LEFT:
+			turningLeft = true;
+			break;
+		case KeyEvent.VK_RIGHT:
+			turningRight = true;
+			break;
 		}
 	}
 
@@ -96,6 +117,12 @@ public class Control implements KeyListener, WindowListener {
 			break;
 		case KeyEvent.VK_DOWN:
 			decelerating = false;
+			break;
+		case KeyEvent.VK_LEFT:
+			turningLeft = false;
+			break;
+		case KeyEvent.VK_RIGHT:
+			turningRight = false;
 			break;
 		}
 	}

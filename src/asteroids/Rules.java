@@ -18,4 +18,9 @@ public abstract class Rules {
 	 * Deceleration of the player's ship, in units per tick per tick.
 	 */
 	public static final double SHIP_DECELERATION = 0.005;
+
+	/**
+	 * Rotation of the player's ship, in radians per tick.
+	 */
+	public static final double SHIP_ROTATION = Math.PI / 180;
 }
