@@ -95,5 +95,9 @@ public abstract class Element {
 		velocityX -= acceleration * Math.sin(direction);
 		velocityY += acceleration * Math.cos(direction);
 		direction += rotation;
+
+		final double factor = Coordinate.wrapAroundFactor(locationX, locationY);
+		locationX *= factor;
+		locationY *= factor;
 	}
 }
